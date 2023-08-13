@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { BotEvent } from '../../types/types';
-	// import type { PageData } from './$types';
-
-	// export let data: PageData;
 
 	const URL: string = 'https://vettel.gluonspace.com/api/events';
 
+	let result: string = '';
 	let events: BotEvent[] = [];
 
 	onMount(async () => {
@@ -16,15 +14,16 @@
 			if (response.ok) {
 				events = await response.json();
 			} else {
-				console.log('Could not fetch events.');
+				result = `Could not fetch events. (Error: ${response.status})`;
 			}
 		} catch (error) {
-			console.log('Could not parse events.');
+			result = `Could not parse events. (Error: ${error})`;
 		}
 	});
 </script>
 
 <h1>Events</h1>
+<div>{result}</div>
 <table>
 	<thead>
 		<tr>

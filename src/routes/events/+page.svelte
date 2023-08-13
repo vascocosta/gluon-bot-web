@@ -5,13 +5,13 @@
 
 	// export let data: PageData;
 
-	const url: string = 'https://vettel.gluonspace.com/api/events';
+	const URL: string = 'https://vettel.gluonspace.com/api/events';
 
 	let events: BotEvent[] = [];
 
 	onMount(async () => {
 		try {
-			const response = await fetch(url);
+			const response = await fetch(URL);
 
 			if (response.ok) {
 				events = await response.json();

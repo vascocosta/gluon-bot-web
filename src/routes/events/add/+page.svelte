@@ -76,10 +76,7 @@
 	<label for="notify">Notify:</label>
 	<input type="checkbox" id="notify" name="notify" bind:value={notify} />
 
-	<label for="apiKey">API Key:</label>
-	<input type="password" id="apiKey" name="apiKey" value={apiKey} />
-
-	<input type="submit" value="Submit" />
+	<input type="submit" value="Add" />
 </form>
 
 <style>

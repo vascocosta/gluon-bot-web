@@ -1,2 +1,5 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Welcome to Gluon Bot</h1>
+<img
+	alt="robot dancing"
+	src="https://bestanimations.com/media/robots/1366955946animated-robot-1.gif"
+/>

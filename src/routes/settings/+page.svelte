@@ -22,7 +22,6 @@
 	}
 </script>
 
-<h1>Settings</h1>
 <div>{result}</div>
 <form id="eventForm" on:submit|preventDefault={saveSettings}>
 	<label for="theme">Theme: (coming soon...)</label>

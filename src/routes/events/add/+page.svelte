@@ -48,7 +48,6 @@
 	}
 </script>
 
-<h1>Add Event</h1>
 <div>{result}</div>
 <form id="eventForm" on:submit|preventDefault={addEvent}>
 	<label for="category">Category:</label>

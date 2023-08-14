@@ -23,14 +23,13 @@
 	});
 </script>
 
-<h1>Events</h1>
 <div>{result}</div>
 <table>
 	<thead>
 		<tr>
 			<th>Category</th>
 			<th>Name</th>
-			<th>description</th>
+			<th>Description</th>
 			<th>Date</th>
 			<th>Channel</th>
 			<th>Tags</th>
@@ -51,3 +50,29 @@
 		{/each}
 	</tbody>
 </table>
+
+<style>
+	/* Set alternating row colors */
+	tbody tr:nth-child(even) {
+		background-color: #eee;
+	}
+
+	/* Style the headers */
+	thead th {
+		background-color: #36c;
+		color: #fff;
+		text-align: left;
+	}
+
+	/* Set table width to 100% */
+	table {
+		width: 100%;
+	}
+
+	/* Remove visible borders */
+	table,
+	th,
+	td {
+		border: none;
+	}
+</style>

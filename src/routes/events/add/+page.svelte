@@ -11,10 +11,10 @@
 	let channel: string = '';
 	let tags: string = '';
 	let notify: boolean = false;
-	let apiKey: string;
+	let apiKey: string = '';
 
 	onMount(() => {
-		apiKey = localStorage.getItem('apiKey') !== null ? localStorage.getItem('apiKey')! : '';
+		apiKey = localStorage.getItem('apiKey')?.toString() || '';
 	});
 
 	async function addEvent(): Promise<void> {

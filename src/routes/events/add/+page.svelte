@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { statusText } from '$lib/utils';
 
 	const URL: string = 'https://vettel.gluonspace.com/api/events/add';
 
@@ -39,7 +40,7 @@
 			if (response.ok) {
 				result = 'Event added successfully';
 			} else {
-				result = `Event could not be added. (Error: ${response.status})`;
+				result = `Event could not be added. (${response.status} ${statusText(response.status)})`;
 			}
 		} catch (error) {
 			result = `Event could not be added. (Error: ${error})`;

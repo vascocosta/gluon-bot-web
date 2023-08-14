@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { statusText } from '$lib/utils';
 	import type { BotEvent } from '../../types/types';
 
 	const URL: string = 'https://vettel.gluonspace.com/api/events';
@@ -14,7 +15,7 @@
 			if (response.ok) {
 				events = await response.json();
 			} else {
-				result = `Could not fetch events. (Error: ${response.status})`;
+				result = `Could not fetch events. (${response.status} ${statusText(response.status)})`;
 			}
 		} catch (error) {
 			result = `Could not parse events. (Error: ${error})`;

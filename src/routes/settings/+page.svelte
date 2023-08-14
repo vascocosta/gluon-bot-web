@@ -2,16 +2,18 @@
 	import { onMount } from 'svelte';
 
 	let result: string = '';
-	let theme: string = '';
 	let apiKey: string = '';
+	let theme: string = '';
 
 	onMount(() => {
 		apiKey = localStorage.getItem('apiKey')?.toString() || '';
+		theme = localStorage.getItem('theme')?.toString() || '';
 	});
 
 	function saveSettings() {
 		try {
 			localStorage.setItem('apiKey', apiKey);
+			localStorage.setItem('theme', theme);
 
 			result = 'Settings saved.';
 		} catch (error) {

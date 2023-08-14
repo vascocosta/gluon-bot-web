@@ -11,6 +11,8 @@
 	function saveSettings() {
 		try {
 			localStorage.setItem('apiKey', apiKey);
+
+			result = 'Settings saved.';
 		} catch (error) {
 			result = 'Could not save settings.';
 		}

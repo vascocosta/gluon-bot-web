@@ -17,7 +17,7 @@
 		apiKey = localStorage.getItem('apiKey') !== null ? localStorage.getItem('apiKey')! : '';
 	});
 
-	async function addEvent() {
+	async function addEvent(): Promise<void> {
 		try {
 			const response = await fetch(URL, {
 				method: 'POST',

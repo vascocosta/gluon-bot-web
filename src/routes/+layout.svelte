@@ -3,6 +3,7 @@
 	<a href="/bets">List Bets</a>
 	<a href="/events">List Events</a>
 	<a href="/events/add">Add Events</a>
+	<a href="/say">Say Message</a>
 	<a href="/settings">Settings</a>
 </nav>
 

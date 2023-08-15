@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let result: string = '';
 	let apiKey: string = '';
+	let result: string = '';
 	let theme: string = '';
 
 	onMount(() => {

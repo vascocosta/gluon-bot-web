@@ -5,8 +5,8 @@
 
 	const URL: string = 'https://vettel.gluonspace.com/api/f1bets';
 
-	let result: string = '';
 	let bets: Bet[] = [];
+	let result: string = '';
 
 	onMount(async () => {
 		try {

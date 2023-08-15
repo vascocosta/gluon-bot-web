@@ -4,15 +4,15 @@
 
 	const URL: string = 'https://vettel.gluonspace.com/api/events/add';
 
-	let result: string = '';
-	let category: string = '';
-	let name: string = '';
-	let description: string = '';
-	let datetime: string = '';
-	let channel: string = '';
-	let tags: string = '';
-	let notify: boolean = false;
 	let apiKey: string = '';
+	let category: string = '';
+	let channel: string = '';
+	let datetime: string = '';
+	let description: string = '';
+	let name: string = '';
+	let notify: boolean = false;
+	let result: string = '';
+	let tags: string = '';
 
 	onMount(() => {
 		apiKey = localStorage.getItem('apiKey')?.toString() || '';

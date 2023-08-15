@@ -5,8 +5,8 @@
 
 	const URL: string = 'https://vettel.gluonspace.com/api/events';
 
-	let result: string = '';
 	let events: BotEvent[] = [];
+	let result: string = '';
 
 	onMount(async () => {
 		try {

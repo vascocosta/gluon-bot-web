@@ -1,9 +1,9 @@
 <nav>
 	<a href="/">Home</a>
-	<a href="/bets.html">List Bets</a>
-	<a href="/events.html">List Events</a>
-	<a href="/events/add.html">Add Events</a>
-	<a href="/settings.html">Settings</a>
+	<a href="/bets">List Bets</a>
+	<a href="/events">List Events</a>
+	<a href="/events/add">Add Events</a>
+	<a href="/settings">Settings</a>
 </nav>
 
 <slot />

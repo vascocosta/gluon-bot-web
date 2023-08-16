@@ -5,76 +5,66 @@
 
 	const URL: string = 'https://vettel.gluonspace.com/api/events';
 
-	let apiKey: string = '';
 	let category: string = '';
 	let channel: string = '';
 	let datetime: string = '';
 	let description: string = '';
-	let events: BotEvent[] = [];
+	let events: Promise<BotEvent[]> = Promise.resolve([]);
 	let name: string = '';
-	let notify: boolean = false;
 	let result: string = '';
 	let tags: string = '';
 
 	onMount(async () => {
-		try {
-			const response = await fetch(URL);
-
-			if (response.ok) {
-				events = await response.json();
-			} else {
-				result = `Could not fetch events. (${response.status} ${statusText(response.status)})`;
-			}
-		} catch (error) {
-			result = `Could not parse events. (Error: ${error})`;
-		}
+		events = search();
 	});
 
-	async function search(): Promise<void> {
-		try {
-			const response = await fetch(`${URL}?category=${category}` +
-												`&name=${name}` +
-												`&description=${description}`+
-												`&datetime=${datetime}` +
-												`&channel=${channel}` +
-												`&tags=${tags}`);
+	async function handleSearch(): Promise<void> {
+		events = search();
+	}
 
-			if (response.ok) {
-				events = [];
-				events = await response.json();
-			} else {
-				result = `Could not fetch events. (${response.status} ${statusText(response.status)})`;
-			}
+	async function search(): Promise<BotEvent[]> {
+		const response = await fetch(
+			`${URL}?category=${category}` +
+				`&name=${name}` +
+				`&description=${description}` +
+				`&datetime=${datetime}` +
+				`&channel=${channel}` +
+				`&tags=${tags}`
+		);
 
-		} catch (error) {
-			result = `Could not parse events. (Error: ${error})`;
+		if (!response.ok) {
+			throw new Error(`Could not fetch data. (${response.status} ${statusText(response.status)})`);
 		}
+
+		return response.json();
 	}
 </script>
 
 <div>{result}</div>
-<form id="eventForm" on:submit|preventDefault={search}>
+<form id="eventForm" on:submit|preventDefault={handleSearch}>
 	<label for="category">Category:</label>
-	<input type="text" id="category" name="category" bind:value={category} />
+	<input type="text" id="category" name="category" bind:value={category} on:keyup={handleSearch} />
 
 	<label for="name">Name:</label>
-	<input type="text" id="name" name="name" bind:value={name} />
+	<input type="text" id="name" name="name" bind:value={name} on:keyup={handleSearch} />
 
 	<label for="description">Description:</label>
-	<input type="text" id="description" name="description" bind:value={description} />
+	<input
+		type="text"
+		id="description"
+		name="description"
+		bind:value={description}
+		on:keyup={handleSearch}
+	/>
 
 	<label for="datetime">Date/Time:</label>
-	<input type="text" id="datetime" name="datetime" bind:value={datetime} />
+	<input type="text" id="datetime" name="datetime" bind:value={datetime} on:keyup={handleSearch} />
 
 	<label for="channel">Channel:</label>
-	<select id="channel" name="channel" bind:value={channel}>
-		<option value="#formula1" selected>#formula1</option>
-		<option value="#geeks">#geeks</option>
-		<option value="#nerds">#nerds</option>
-	</select>
+	<input type="text" id="channel" name="channel" bind:value={channel} on:keyup={handleSearch} />
 
 	<label for="tags">Tags:</label>
-	<input type="text" id="tags" name="tags" bind:value={tags} />
+	<input type="text" id="tags" name="tags" bind:value={tags} on:keyup={handleSearch} />
 
 	<input type="submit" value="Search" />
 </form>
@@ -91,21 +81,31 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each events as event (event.name)}
-			<tr>
-				<td>{event.category}</td>
-				<td>{event.name}</td>
-				<td>{event.description}</td>
-				<td>{event.datetime}</td>
-				<td>{event.channel}</td>
-				<td>{event.tags}</td>
-				<td>{event.notify}</td>
-			</tr>
-		{/each}
+		{#await events}
+			<p>Fetching data...</p>
+		{:then events}
+			{#each events as event (event.datetime)}
+				<tr>
+					<td>{event.category}</td>
+					<td>{event.name}</td>
+					<td>{event.description}</td>
+					<td>{event.datetime}</td>
+					<td>{event.channel}</td>
+					<td>{event.tags}</td>
+					<td>{event.notify}</td>
+				</tr>
+			{/each}
+		{:catch error}
+			<p>Error: {error.message}</p>
+		{/await}
 	</tbody>
 </table>
 
 <style>
+	form {
+		margin-bottom: 20px;
+	}
+
 	/* Set alternating row colors */
 	tbody tr:nth-child(even) {
 		background-color: #eee;

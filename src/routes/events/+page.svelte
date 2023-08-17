@@ -5,6 +5,7 @@
 
 	const URL: string = 'https://vettel.gluonspace.com/api/events';
 
+	let apiKey: string = '';
 	let category: string = '';
 	let channel: string = '';
 	let datetime: string = '';
@@ -16,7 +17,35 @@
 
 	onMount(async () => {
 		events = search();
+		apiKey = localStorage.getItem('apiKey')?.toString() || '';
 	});
+
+	async function handleDelete(event: BotEvent): Promise<void> {
+		if (
+			confirm(
+				`Are you sure you want to delete this event?\n` +
+					`Category: ${event.category}\n` +
+					`Name: ${event.name}\n` +
+					`Description: ${event.description}`
+			)
+		) {
+			const response = await fetch(`${URL}/delete`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'x-api-key': apiKey
+				},
+				body: JSON.stringify(event)
+			});
+
+			if (!response.ok) {
+				throw new Error('Could not delete event.');
+			}
+
+			result = 'Event deleted successfully.';
+			events = search();
+		}
+	}
 
 	async function handleSearch(): Promise<void> {
 		events = search();
@@ -78,6 +107,7 @@
 			<th>Channel</th>
 			<th>Tags</th>
 			<th>Notify</th>
+			<th>Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -93,6 +123,7 @@
 					<td>{event.channel}</td>
 					<td>{event.tags}</td>
 					<td>{event.notify}</td>
+					<td><button on:click={() => handleDelete(event)}>Delete</button></td>
 				</tr>
 			{/each}
 		{:catch error}

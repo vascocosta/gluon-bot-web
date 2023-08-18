@@ -18,7 +18,7 @@
 	let tags: string = '';
 
 	onMount(async () => {
-		events = search();
+		events = fetchEvents();
 		apiKey = localStorage.getItem('apiKey')?.toString() || '';
 	});
 
@@ -47,7 +47,7 @@
 			}
 
 			result = 'Event deleted successfully.';
-			events = search();
+			events = fetchEvents();
 		}
 	}
 
@@ -56,16 +56,16 @@
 	}
 
 	function handleSearch() {
-		events = search();
+		events = fetchEvents();
 	}
 
 	async function handleOrderBy(newOrderBy: string, newDescending: boolean): Promise<void> {
 		orderBy = newOrderBy;
 		descending = newDescending;
-		events = search();
+		events = fetchEvents();
 	}
 
-	async function search(): Promise<BotEvent[]> {
+	async function fetchEvents(): Promise<BotEvent[]> {
 		const response = await fetch(
 			`${URL}?category=${category}` +
 				`&name=${name}` +

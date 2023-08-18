@@ -9,9 +9,11 @@
 	let category: string = '';
 	let channel: string = '';
 	let datetime: string = '';
+	let descending: boolean = true;
 	let description: string = '';
 	let events: Promise<BotEvent[]> = Promise.resolve([]);
 	let name: string = '';
+	let orderBy: string = 'datetime';
 	let result: string = '';
 	let tags: string = '';
 
@@ -39,7 +41,9 @@
 			});
 
 			if (!response.ok) {
-				throw new Error('Could not delete event.');
+				alert(`Could not delete event. (${response.status} ${statusText(response.status)})`);
+
+				return;
 			}
 
 			result = 'Event deleted successfully.';
@@ -47,7 +51,13 @@
 		}
 	}
 
-	async function handleSearch(): Promise<void> {
+	function handleSearch() {
+		events = search();
+	}
+
+	async function handleOrderBy(newOrderBy: string, newDescending: boolean): Promise<void> {
+		orderBy = newOrderBy;
+		descending = newDescending;
 		events = search();
 	}
 
@@ -58,7 +68,9 @@
 				`&description=${description}` +
 				`&datetime=${datetime}` +
 				`&channel=${channel}` +
-				`&tags=${tags}`
+				`&tags=${tags}` +
+				`&orderby=${orderBy}` +
+				`&descending=${descending}`
 		);
 
 		if (!response.ok) {
@@ -100,11 +112,26 @@
 <table>
 	<thead>
 		<tr>
-			<th>Category</th>
-			<th>Name</th>
-			<th>Description</th>
-			<th>Date</th>
-			<th>Channel</th>
+			<th
+				>Category <button on:click={() => handleOrderBy('category', false)}>↑</button>
+				<button on:click={() => handleOrderBy('category', true)}>↓</button></th
+			>
+			<th
+				>Name <button on:click={() => handleOrderBy('name', false)}>↑</button>
+				<button on:click={() => handleOrderBy('name', true)}>↓</button></th
+			>
+			<th
+				>Description <button on:click={() => handleOrderBy('description', false)}>↑</button>
+				<button on:click={() => handleOrderBy('description', true)}>↓</button></th
+			>
+			<th
+				>Date/Time <button on:click={() => handleOrderBy('datetime', false)}>↑</button>
+				<button on:click={() => handleOrderBy('datetime', true)}>↓</button></th
+			>
+			<th
+				>Channel <button on:click={() => handleOrderBy('channel', false)}>↑</button>
+				<button on:click={() => handleOrderBy('channel', true)}>↓</button></th
+			>
 			<th>Tags</th>
 			<th>Notify</th>
 			<th>Actions</th>
@@ -137,24 +164,28 @@
 		margin-bottom: 20px;
 	}
 
-	/* Set alternating row colors */
-	tbody tr:nth-child(even) {
-		background-color: #eee;
+	tr:nth-child(even) {
+		background: #eee;
 	}
 
-	/* Style the headers */
+	tr:nth-child(odd) {
+		background: #fff;
+	}
+
+	tr:hover {
+		background: #d6eeee;
+	}
+
 	thead th {
 		background-color: #36c;
 		color: #fff;
 		text-align: left;
 	}
 
-	/* Set table width to 100% */
 	table {
 		width: 100%;
 	}
 
-	/* Remove visible borders */
 	table,
 	th,
 	td {

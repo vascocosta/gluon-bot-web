@@ -51,6 +51,10 @@
 		}
 	}
 
+	function handleEdit(event: BotEvent) {
+		alert('Coming soon...');
+	}
+
 	function handleSearch() {
 		events = search();
 	}
@@ -125,7 +129,7 @@
 				<button on:click={() => handleOrderBy('description', true)}>↓</button></th
 			>
 			<th
-				>Date/Time <button on:click={() => handleOrderBy('datetime', false)}>↑</button>
+				>Date/Time (UTC) <button on:click={() => handleOrderBy('datetime', false)}>↑</button>
 				<button on:click={() => handleOrderBy('datetime', true)}>↓</button></th
 			>
 			<th
@@ -150,7 +154,10 @@
 					<td>{event.channel}</td>
 					<td>{event.tags}</td>
 					<td>{event.notify}</td>
-					<td><button on:click={() => handleDelete(event)}>Delete</button></td>
+					<td
+						><button on:click={() => handleDelete(event)}>Delete</button>
+						<button on:click={() => handleEdit(event)}>⠀Edit⠀</button></td
+					>
 				</tr>
 			{/each}
 		{:catch error}
@@ -160,8 +167,13 @@
 </table>
 
 <style>
+	button {
+		font-family: Arial, sans-serif;
+	}
+
 	form {
 		margin-bottom: 20px;
+		font-family: Arial, sans-serif;
 	}
 
 	tr:nth-child(even) {
@@ -190,5 +202,6 @@
 	th,
 	td {
 		border: none;
+		font-family: Arial, sans-serif;
 	}
 </style>

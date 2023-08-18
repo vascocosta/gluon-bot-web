@@ -83,6 +83,8 @@
 		display: grid;
 		gap: 10px;
 		width: 25%;
+		margin-bottom: 20px;
+		font-family: Arial, sans-serif;
 	}
 
 	label {

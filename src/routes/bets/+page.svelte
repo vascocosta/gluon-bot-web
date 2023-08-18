@@ -48,29 +48,3 @@
 		{/each}
 	</tbody>
 </table>
-
-<style>
-	/* Set alternating row colors */
-	tbody tr:nth-child(even) {
-		background-color: #eee;
-	}
-
-	/* Style the headers */
-	thead th {
-		background-color: #36c;
-		color: #fff;
-		text-align: left;
-	}
-
-	/* Set table width to 100% */
-	table {
-		width: 100%;
-	}
-
-	/* Remove visible borders */
-	table,
-	th,
-	td {
-		border: none;
-	}
-</style>

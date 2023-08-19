@@ -1,12 +1,3 @@
-interface Bet {
-    race: string;
-    nick: string;
-    p1: string;
-    p2: string;
-    p3: string;
-    fl: string;
-}
-
 interface BotEvent {
     category: string;
     name: string;
@@ -17,4 +8,13 @@ interface BotEvent {
     notify: boolean;
 }
 
-export type { Bet, BotEvent }
+interface F1Bet {
+    race: string;
+    nick: string;
+    p1: string;
+    p2: string;
+    p3: string;
+    fl: string;
+}
+
+export type { BotEvent, F1Bet }

@@ -21,6 +21,18 @@
 		apiKey = localStorage.getItem('apiKey')?.toString() || '';
 	});
 
+	function clearInputs() {
+		category = '';
+		channel = '';
+		datetime = '';
+		descending = true;
+		description = '';
+		name = '';
+		orderBy = 'datetime';
+		tags = '';
+		events = fetchEvents();
+	}
+
 	async function handleDelete(event: BotEvent): Promise<void> {
 		try {
 			if (
@@ -120,8 +132,10 @@
 	<label for="tags">Tags:</label>
 	<input type="text" id="tags" name="tags" bind:value={tags} on:keyup={handleSearch} />
 
-	<input type="button" value="Clear" />
+	<input type="button" value="Clear" on:click={clearInputs} />
 	<input type="submit" value="Search" />
+	|
+	<button><a href="/events/add">Add Event</a></button>
 </form>
 <table>
 	<thead>

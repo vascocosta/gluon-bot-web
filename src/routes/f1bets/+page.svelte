@@ -13,6 +13,12 @@
 		bets = fetchF1Bets();
 	});
 
+	function clearInputs() {
+		nick = '';
+		race = '';
+		bets = fetchF1Bets();
+	}
+
 	function handleSearch() {
 		bets = fetchF1Bets();
 	}
@@ -36,7 +42,7 @@
 	<label for="nick">Nick:</label>
 	<input type="text" id="nick" name="nick" bind:value={nick} on:keyup={handleSearch} />
 
-	<input type="button" value="Clear" />
+	<input type="button" value="Clear" on:click={clearInputs} />
 	<input type="submit" value="Search" />
 </form>
 <table>

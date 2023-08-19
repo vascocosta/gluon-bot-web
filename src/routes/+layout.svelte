@@ -1,9 +1,8 @@
 <nav>
 	<a href="/">Home</a>
-	<a href="/f1bets">F1Bets</a>
+	<a href="/f1bets">F1 Bets</a>
 	<a href="/events">Events</a>
-	<a href="/events/add">Add Events</a>
-	<a href="/say">Say Message</a>
+	<a href="/say">IRC Messages</a>
 	<a href="/settings">Settings</a>
 </nav>
 

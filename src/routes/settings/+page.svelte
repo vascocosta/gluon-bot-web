@@ -16,7 +16,7 @@
 			localStorage.setItem('theme', theme);
 
 			result = 'Settings saved.';
-		} catch (error) {
+		} catch (error: unknown) {
 			result = 'Could not save settings.';
 		}
 	}

@@ -1,10 +1,8 @@
 <script lang="ts">
+	import { API_URL } from '../../constants/constants';
 	import { onMount } from 'svelte';
 	import { statusText } from '$lib/utils';
 	import type { BotEvent } from '../../types/types';
-	import { LOGNAME } from '$env/static/private';
-
-	const URL: string = 'https://vettel.gluonspace.com/api/events';
 
 	let apiKey: string = '';
 	let category: string = '';
@@ -33,7 +31,7 @@
 						`Description: ${event.description}`
 				)
 			) {
-				const response = await fetch(`${URL}/delete`, {
+				const response = await fetch(`${API_URL}/events/delete`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -51,8 +49,12 @@
 				result = 'Event deleted successfully.';
 				events = fetchEvents();
 			}
-		} catch (error: any) {
-			result = `Could not delete event. (${error.message})`;
+		} catch (error: unknown) {
+			if (error instanceof TypeError || error instanceof DOMException || error instanceof Error) {
+				result = `Event could not be deleted. (${error.message})`;
+			} else {
+				result = 'Event could not be deleted. (Unknown error)';
+			}
 		}
 	}
 
@@ -74,7 +76,7 @@
 
 	async function fetchEvents(): Promise<BotEvent[]> {
 		const response = await fetch(
-			`${URL}?category=${category}` +
+			`${API_URL}/events?category=${category}` +
 				`&name=${name}` +
 				`&description=${description}` +
 				`&datetime=${datetime}` +

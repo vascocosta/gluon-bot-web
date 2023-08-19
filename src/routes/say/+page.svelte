@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { API_URL } from '../../constants/constants';
 	import { onMount } from 'svelte';
 	import { statusText } from '$lib/utils';
 
@@ -12,10 +13,8 @@
 	});
 
 	async function sayMessage(): Promise<void> {
-		const API_URL = 'https://vettel.gluonspace.com/api/say';
-
 		try {
-			let response = await fetch(API_URL, {
+			let response = await fetch(`${API_URL}/say`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -33,8 +32,12 @@
 			} else {
 				result = `Could not send message. (${response.status} ${statusText(response.status)})`;
 			}
-		} catch (error) {
-			result = `Message could not be sent. (Error: ${error})`;
+		} catch (error: unknown) {
+			if (error instanceof TypeError || error instanceof DOMException || error instanceof Error) {
+				result = `Message could not be sent. (${error.message})`;
+			} else {
+				result = 'Message could not be sent. (Unknown error)';
+			}
 		}
 	}
 </script>

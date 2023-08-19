@@ -1,8 +1,7 @@
 <script lang="ts">
+	import { API_URL } from '../../../constants/constants';
 	import { onMount } from 'svelte';
 	import { statusText } from '$lib/utils';
-
-	const URL: string = 'https://vettel.gluonspace.com/api/events/add';
 
 	let apiKey: string = '';
 	let category: string = '';
@@ -20,7 +19,7 @@
 
 	async function addEvent(): Promise<void> {
 		try {
-			const response = await fetch(URL, {
+			const response = await fetch(`${API_URL}/events/add}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -42,8 +41,12 @@
 			} else {
 				result = `Event could not be added. (${response.status} ${statusText(response.status)})`;
 			}
-		} catch (error) {
-			result = `Event could not be added. (Error: ${error})`;
+		} catch (error: unknown) {
+			if (error instanceof TypeError || error instanceof DOMException || error instanceof Error) {
+				result = `Event could not be added. (${error.message})`;
+			} else {
+				result = 'Event could not be added. (Unknown error)';
+			}
 		}
 	}
 </script>

@@ -1,4 +1,4 @@
-export interface Bet {
+interface Bet {
     race: string;
     nick: string;
     p1: string;
@@ -7,7 +7,7 @@ export interface Bet {
     fl: string;
 }
 
-export interface BotEvent {
+interface BotEvent {
     category: string;
     name: string;
     description: string;
@@ -16,3 +16,5 @@ export interface BotEvent {
     tags: string;
     notify: boolean;
 }
+
+export type { Bet, BotEvent }

@@ -1,24 +1,27 @@
 <script lang="ts">
+	import { API_URL } from '../../constants/constants';
 	import { onMount } from 'svelte';
 	import { statusText } from '$lib/utils';
 	import type { Bet } from '../../types/types';
-
-	const URL: string = 'https://vettel.gluonspace.com/api/f1bets';
 
 	let bets: Bet[] = [];
 	let result: string = '';
 
 	onMount(async () => {
 		try {
-			const response = await fetch(URL);
+			const response = await fetch(`${API_URL}/f1bets`);
 
 			if (response.ok) {
 				bets = await response.json();
 			} else {
 				result = `Could not fetch bets. (${response.status} ${statusText(response.status)})`;
 			}
-		} catch (error) {
-			result = `Could not parse bets. (Error: ${error})`;
+		} catch (error: unknown) {
+			if (error instanceof TypeError || error instanceof DOMException || error instanceof Error) {
+				result = `Could not parse bets. (${error.message})`;
+			} else {
+				result = 'Could not parse bets. (Unknown error)';
+			}
 		}
 	});
 </script>

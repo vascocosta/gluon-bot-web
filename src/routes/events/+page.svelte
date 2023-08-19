@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { statusText } from '$lib/utils';
 	import type { BotEvent } from '../../types/types';
+	import { LOGNAME } from '$env/static/private';
 
 	const URL: string = 'https://vettel.gluonspace.com/api/events';
 
@@ -17,37 +18,41 @@
 	let result: string = '';
 	let tags: string = '';
 
-	onMount(async () => {
+	onMount(() => {
 		events = fetchEvents();
 		apiKey = localStorage.getItem('apiKey')?.toString() || '';
 	});
 
 	async function handleDelete(event: BotEvent): Promise<void> {
-		if (
-			confirm(
-				`Are you sure you want to delete this event?\n` +
-					`Category: ${event.category}\n` +
-					`Name: ${event.name}\n` +
-					`Description: ${event.description}`
-			)
-		) {
-			const response = await fetch(`${URL}/delete`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'x-api-key': apiKey
-				},
-				body: JSON.stringify(event)
-			});
+		try {
+			if (
+				confirm(
+					`Are you sure you want to delete this event?\n` +
+						`Category: ${event.category}\n` +
+						`Name: ${event.name}\n` +
+						`Description: ${event.description}`
+				)
+			) {
+				const response = await fetch(`${URL}/delete`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'x-api-key': apiKey
+					},
+					body: JSON.stringify(event)
+				});
 
-			if (!response.ok) {
-				alert(`Could not delete event. (${response.status} ${statusText(response.status)})`);
+				if (!response.ok) {
+					alert(`Could not delete event. (${response.status} ${statusText(response.status)})`);
 
-				return;
+					return;
+				}
+
+				result = 'Event deleted successfully.';
+				events = fetchEvents();
 			}
-
-			result = 'Event deleted successfully.';
-			events = fetchEvents();
+		} catch (error: any) {
+			result = `Could not delete event. (${error.message})`;
 		}
 	}
 
@@ -59,10 +64,12 @@
 		events = fetchEvents();
 	}
 
-	async function handleOrderBy(newOrderBy: string, newDescending: boolean): Promise<void> {
-		orderBy = newOrderBy;
-		descending = newDescending;
-		events = fetchEvents();
+	function handleOrderBy(newOrderBy: string, newDescending: boolean) {
+		return () => {
+			orderBy = newOrderBy;
+			descending = newDescending;
+			events = fetchEvents();
+		};
 	}
 
 	async function fetchEvents(): Promise<BotEvent[]> {
@@ -111,30 +118,31 @@
 	<label for="tags">Tags:</label>
 	<input type="text" id="tags" name="tags" bind:value={tags} on:keyup={handleSearch} />
 
+	<input type="button" value="Clear" />
 	<input type="submit" value="Search" />
 </form>
 <table>
 	<thead>
 		<tr>
 			<th
-				>Category <button on:click={() => handleOrderBy('category', false)}>↑</button>
-				<button on:click={() => handleOrderBy('category', true)}>↓</button></th
+				>Category <button on:click={handleOrderBy('category', false)}>↑</button>
+				<button on:click={handleOrderBy('category', true)}>↓</button></th
 			>
 			<th
-				>Name <button on:click={() => handleOrderBy('name', false)}>↑</button>
-				<button on:click={() => handleOrderBy('name', true)}>↓</button></th
+				>Name <button on:click={handleOrderBy('name', false)}>↑</button>
+				<button on:click={handleOrderBy('name', true)}>↓</button></th
 			>
 			<th
-				>Description <button on:click={() => handleOrderBy('description', false)}>↑</button>
-				<button on:click={() => handleOrderBy('description', true)}>↓</button></th
+				>Description <button on:click={handleOrderBy('description', false)}>↑</button>
+				<button on:click={handleOrderBy('description', true)}>↓</button></th
 			>
 			<th
-				>Date/Time (UTC) <button on:click={() => handleOrderBy('datetime', false)}>↑</button>
-				<button on:click={() => handleOrderBy('datetime', true)}>↓</button></th
+				>Date/Time (UTC) <button on:click={handleOrderBy('datetime', false)}>↑</button>
+				<button on:click={handleOrderBy('datetime', true)}>↓</button></th
 			>
 			<th
-				>Channel <button on:click={() => handleOrderBy('channel', false)}>↑</button>
-				<button on:click={() => handleOrderBy('channel', true)}>↓</button></th
+				>Channel <button on:click={handleOrderBy('channel', false)}>↑</button>
+				<button on:click={handleOrderBy('channel', true)}>↓</button></th
 			>
 			<th>Tags</th>
 			<th>Notify</th>
@@ -143,7 +151,7 @@
 	</thead>
 	<tbody>
 		{#await events}
-			<p>Fetching data...</p>
+			<p>Fetching events...</p>
 		{:then events}
 			{#each events as event (event.datetime)}
 				<tr>
@@ -161,7 +169,7 @@
 				</tr>
 			{/each}
 		{:catch error}
-			<p>Error: {error.message}</p>
+			<p>Could not fetch events. ({error.message})</p>
 		{/await}
 	</tbody>
 </table>

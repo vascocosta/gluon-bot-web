@@ -1,8 +1,8 @@
 <nav>
 	<a href="/">Home</a>
-	<a href="/f1bets">F1 Bets</a>
 	<a href="/events">Events</a>
-	<a href="/say">IRC Messages</a>
+	<a href="/f1bets">F1 Bets</a>
+	<a href="/say">Send Message</a>
 	<a href="/settings">Settings</a>
 </nav>
 
@@ -12,6 +12,10 @@
 	:global(body) {
 		background-color: rgb(235, 235, 235);
 		color: rgb(40, 40, 40);
+	}
+
+	:global(a) {
+		text-decoration: none;
 	}
 
 	nav {

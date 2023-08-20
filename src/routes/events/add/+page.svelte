@@ -19,7 +19,7 @@
 
 	async function addEvent(): Promise<void> {
 		try {
-			const response = await fetch(`${API_URL}/events/add}`, {
+			const response = await fetch(`${API_URL}/events/add`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

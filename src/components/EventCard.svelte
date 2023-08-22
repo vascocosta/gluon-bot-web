@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { BotEvent } from '../types/types';
+
 	export let event: BotEvent;
 
-	function formatDate(dateString: Date) {
+	function formatDate(dateString: Date): string {
 		const date = new Date(dateString);
 		return date.toLocaleString();
 	}

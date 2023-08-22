@@ -1,9 +1,11 @@
 <script lang="ts">
 	export let data;
+	import F1BetCard from '../components/F1BetCard.svelte';
 	import EventCard from '../components/EventCard.svelte';
-	import type { BotEvent } from '../types/types';
+	import type { BotEvent, F1Bet } from '../types/types';
 
-	let events = data.events;
+	let events: BotEvent[] = data.events;
+	let bets: F1Bet[] = data.bets;
 </script>
 
 <div class="container">
@@ -21,6 +23,12 @@
 			.filter((event) => new Date(event.datetime) > new Date() && event.category !== '[Formula 1]')
 			.slice(0, 5) as event (event.name)}
 			<EventCard {event} />
+		{/each}
+	</div>
+	<div class="column">
+		<p>Latest Bets</p>
+		{#each bets.reverse().slice(0, 5) as bet (bet.nick)}
+			<F1BetCard {bet} />
 		{/each}
 	</div>
 </div>

@@ -28,4 +28,10 @@ interface Quote {
     channel: string;
 }
 
-export type { BotEvent, F1Bet, F1BetScore, Quote }
+interface APIData {
+    bets: Promise<F1Bet[]>;
+    events: Promise<BotEvent[]>;
+    scores: Promise<F1BetScore[]>;
+}
+
+export type { APIData, BotEvent, F1Bet, F1BetScore, Quote }

@@ -1,8 +1,8 @@
 import { API_URL } from '../constants/constants';
 import { statusText } from '$lib/utils';
-import type { BotEvent, F1Bet, F1BetScore } from '../types/types';
+import type { APIData, BotEvent, F1Bet, F1BetScore } from '../types/types';
 
-export function load({ params }) {
+export function load(): APIData {
     return {
         bets: fetchData<F1Bet>('f1bets'),
         events: fetchData<BotEvent>('events'),

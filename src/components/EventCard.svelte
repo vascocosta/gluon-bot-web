@@ -5,7 +5,8 @@
 
 	function formatDate(dateString: Date): string {
 		const date = new Date(dateString);
-		return date.toLocaleString();
+		const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		return `${date.toLocaleString()} (${tz})`;
 	}
 </script>
 
@@ -13,16 +14,16 @@
 	<div class="category">{event.category}</div>
 	<div class="name">{event.name}</div>
 	<div class="description">{event.description}</div>
-	<div class="datetime">Date/Time: {formatDate(event.datetime)}</div>
+	<div class="datetime">{formatDate(event.datetime)}</div>
 </div>
 
 <style>
 	.card {
 		border: 1px solid #ccc;
-		border-radius: 4px;
+		border-radius: 10px;
 		padding: 10px;
 		margin-bottom: 10px;
-		background-color: rgb(212, 212, 212);
+		background-color: rgb(176, 221, 238);
 	}
 
 	.category {
@@ -37,7 +38,7 @@
 
 	.description,
 	.datetime {
-		color: #777;
+		color: #545454;
 		margin-bottom: 5px;
 	}
 </style>

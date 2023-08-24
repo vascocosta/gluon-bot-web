@@ -17,10 +17,15 @@ interface F1Bet {
     fl: string;
 }
 
+interface F1BetScore {
+    nick: string;
+    points: number;
+}
+
 interface Quote {
     date: Date;
     text: string;
     channel: string;
 }
 
-export type { BotEvent, F1Bet, Quote }
+export type { BotEvent, F1Bet, F1BetScore, Quote }

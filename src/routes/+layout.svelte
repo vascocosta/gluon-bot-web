@@ -13,6 +13,7 @@
 	:global(body) {
 		background-color: rgb(235, 235, 235);
 		color: rgb(40, 40, 40);
+		margin: 0px;
 	}
 
 	:global(a) {
@@ -24,16 +25,16 @@
 		justify-content: left;
 		margin-bottom: 20px;
 		background-color: rgb(79, 181, 255);
-		padding: 5px;
+		padding: 8px;
 	}
 
 	nav a {
 		color: white;
 		text-decoration: none;
-		padding: 5px;
+		padding: 8px;
 		margin: 5px;
 		font-weight: bold;
-		font-size: 16px;
+		font-size: 20px;
 		font-family: Arial, sans-serif;
 		background-color: #36c;
 		border-radius: 5px;
@@ -50,6 +51,8 @@
 	:global(form) {
 		margin-bottom: 20px;
 		font-family: Arial, sans-serif;
+		background-color: rgb(176, 221, 238);
+		padding: 5px;
 	}
 
 	:global(tr:nth-child(even)) {

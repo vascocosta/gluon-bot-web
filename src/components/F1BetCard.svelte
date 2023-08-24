@@ -18,10 +18,10 @@
 <style>
 	.card {
 		border: 1px solid #ccc;
-		border-radius: 4px;
+		border-radius: 10px;
 		padding: 10px;
 		margin-bottom: 10px;
-		background-color: rgb(212, 212, 212);
+		background-color: rgb(176, 221, 238);
 	}
 
 	.race {
@@ -36,7 +36,7 @@
 
 	.podium,
 	.flap {
-		color: #777;
+		color: #545454;
 		margin-bottom: 5px;
 	}
 </style>

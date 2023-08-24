@@ -13,7 +13,7 @@
 	.card {
 		border: 1px solid #ccc;
 		border-radius: 0px;
-		padding: 10px;
+		padding: 5px;
 		margin-bottom: 10px;
 		margin-top: 10px;
 		background-color: rgb(4, 121, 163);

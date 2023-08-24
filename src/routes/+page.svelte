@@ -11,7 +11,7 @@
 </script>
 
 <div class="scorecard-container">
-	{#each scores.slice(0, 13) as score (score.points)}
+	{#each scores.slice(0, 14) as score (score.points)}
 		<F1BetScoreCard {score} />
 	{/each}
 </div>
@@ -36,13 +36,13 @@
 		<p>Other Events</p>
 		{#each events
 			.filter((event) => event.channel.toLocaleLowerCase() !== '#formula1' && new Date(event.datetime) > new Date())
-			.slice(0, 9) as event (event.name)}
+			.slice(0, 25) as event (event.name)}
 			<EventCard {event} />
 		{/each}
 	</div>
 	<div class="column">
 		<p>Latest Bets</p>
-		{#each bets.reverse().slice(0, 9) as bet (bet.nick)}
+		{#each bets.reverse().slice(0, 10) as bet (bet.nick)}
 			<F1BetCard {bet} />
 		{/each}
 	</div>

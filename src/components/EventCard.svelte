@@ -6,7 +6,15 @@
 	function formatDate(dateString: Date): string {
 		const date = new Date(dateString);
 		const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-		return `${date.toLocaleString()} (${tz})`;
+		const options: Intl.DateTimeFormatOptions = {
+			weekday: 'short',
+			day: 'numeric',
+			month: 'short',
+			hour: 'numeric',
+			minute: 'numeric'
+		};
+
+		return `${date.toLocaleString(undefined, options)} (${tz})`;
 	}
 </script>
 

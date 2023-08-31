@@ -77,6 +77,34 @@
 
 		return response.json();
 	}
+
+	async function sayQuote(quote: Quote): Promise<void> {
+		try {
+			let response = await fetch(`${API_URL}/say`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'x-api-key': apiKey
+				},
+				body: JSON.stringify({
+					channel: quote.channel,
+					body: `Quote ${quote.date} "${quote.text}"`
+				})
+			});
+
+			if (response.ok) {
+				result = 'Quote sent successfully.';
+			} else {
+				result = `Could not send quote. (${response.status} ${statusText(response.status)})`;
+			}
+		} catch (error: unknown) {
+			if (error instanceof TypeError || error instanceof DOMException || error instanceof Error) {
+				result = `Quote could not be sent. (${error.message})`;
+			} else {
+				result = 'Quote could not be sent. (Unknown error)';
+			}
+		}
+	}
 </script>
 
 <div>{result}</div>
@@ -124,7 +152,8 @@
 									'/' +
 									encodeURIComponent(quote.channel)}>Edit</a
 							></button
-						></td
+						>
+						<button on:click={() => sayQuote(quote)}>Say</button></td
 					>
 				</tr>
 			{/each}

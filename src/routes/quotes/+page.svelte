@@ -115,7 +115,16 @@
 					<td>{quote.channel}</td>
 					<td
 						><button on:click={() => handleDelete(quote)}>Delete</button>
-						<button on:click={() => handleEdit(quote)}>⠀Edit⠀</button></td
+						<button
+							><a
+								href={'/quotes/edit/' +
+									encodeURIComponent(quote.date.toString()) +
+									'/' +
+									encodeURIComponent(quote.text) +
+									'/' +
+									encodeURIComponent(quote.channel)}>Edit</a
+							></button
+						></td
 					>
 				</tr>
 			{/each}

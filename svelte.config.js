@@ -5,5 +5,8 @@ export default {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter({ fallback: 'index.html' }),
+		prerender: {
+			entries: ['/quotes/edit/{text=string}/{text=string}/{text=string}'],
+		},
 	}
 };

@@ -15,46 +15,25 @@
 	});
 
 	async function updateQuote(): Promise<void> {
-		//alert(`search: ${data.text} | new: ${text}`);
 		try {
-			const response = await fetch(`${API_URL}/quotes/delete`, {
+			const response = await fetch(`${API_URL}/quotes/update`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'x-api-key': apiKey
 				},
-				body: JSON.stringify({
-					date: data.date,
-					text: data.text,
-					channel: data.channel
-				})
-			});
-
-			if (!response.ok) {
-				alert(`Quote could not be updated. (${response.status} ${statusText(response.status)})`);
-
-				return;
-			}
-		} catch (error: unknown) {
-			if (error instanceof TypeError || error instanceof DOMException || error instanceof Error) {
-				result = `Quote could not be updated. (${error.message})`;
-			} else {
-				result = 'Quote could not be updated. (Unknown error)';
-			}
-		}
-
-		try {
-			const response = await fetch(`${API_URL}/quotes/add`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'x-api-key': apiKey
-				},
-				body: JSON.stringify({
-					date: date,
-					text: text,
-					channel: channel
-				})
+				body: JSON.stringify([
+					{
+						date: data.date,
+						text: data.text,
+						channel: data.channel
+					},
+					{
+						date: date,
+						text: text,
+						channel: channel
+					}
+				])
 			});
 
 			if (response.ok) {

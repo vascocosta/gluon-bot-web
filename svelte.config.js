@@ -6,7 +6,10 @@ export default {
 	kit: {
 		adapter: adapter({ fallback: 'index.html' }),
 		prerender: {
-			entries: ['/quotes/edit/{text=string}/{text=string}/{text=string}'],
+			entries: [
+				'/quotes/edit/{text=string}/{text=string}/{text=string}',
+				'/events/edit/{string}/{string}/{string}/{string}/{string}/{string}/{boolean}'
+			],
 		},
 	}
 };

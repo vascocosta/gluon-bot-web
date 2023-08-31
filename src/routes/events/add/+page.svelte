@@ -12,6 +12,7 @@
 	let notify: boolean = false;
 	let result: string = '';
 	let tags: string = '';
+	let checked: boolean = notify === 'true' ? true : false;
 
 	onMount(() => {
 		apiKey = localStorage.getItem('apiKey')?.toString() || '';
@@ -32,7 +33,7 @@
 					datetime: datetime + ':00Z',
 					channel: channel,
 					tags: tags,
-					notify: true
+					notify: checked
 				})
 			});
 

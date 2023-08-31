@@ -180,7 +180,24 @@
 					<td>{event.notify}</td>
 					<td
 						><button on:click={() => handleDelete(event)}>Delete</button>
-						<button on:click={() => handleEdit(event)}>⠀Edit⠀</button></td
+						<button
+							><a
+								href={'/events/edit/' +
+									encodeURIComponent(event.category) +
+									'/' +
+									encodeURIComponent(event.name) +
+									'/' +
+									encodeURIComponent(event.description) +
+									'/' +
+									encodeURIComponent(event.datetime.toString()) +
+									'/' +
+									encodeURIComponent(event.channel) +
+									'/' +
+									encodeURIComponent(event.tags) +
+									'/' +
+									encodeURIComponent(event.notify)}>Edit</a
+							></button
+						></td
 					>
 				</tr>
 			{/each}
